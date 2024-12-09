@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="application-context.xml" />
+    <bean id="savingAccount1" class="com.luxoft.bankapp.model.SavingAccount">
+        <constructor-arg value="1000" />
+    </bean>
+    <bean id="checkingAccount1" class="com.luxoft.bankapp.model.CheckingAccount">
+        <property name="overdraft" value="1000" />
+    </bean>
+    <bean id="checkingAccount2" class="com.luxoft.bankapp.model.CheckingAccount">
+        <property name="overdraft" value="1500" />
+    </bean>
+    <bean id="client1" class="com.luxoft.bankapp.model.Client">
+        <property name="name" value="${client1}" />
+        <property name="gender" value="MALE" />
+        <property name="repository" ref="mapClientRepository" />
+        <property name="accounts">
+            <list>
+                <ref bean="savingAccount1" />
+                <ref bean="checkingAccount1" />
+            </list>
+        </property>
+    </bean>
+    <bean id="client2" class="com.luxoft.bankapp.model.Client">
+        <property name="name" value="${client2}" />
+        <property name="gender" value="MALE" />
+        <property name="repository" ref="mapClientRepository" />
+        <property name="accounts">
+            <list>
+                <ref bean="checkingAccount2" />
+            </list>
+        </property>
+    </bean>
+</beans>
