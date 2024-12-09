@@ -1,32 +1,37 @@
 package com.luxoft.bankapp.service;
 
-import com.luxoft.bankapp.model.AbstractAccount;
+import com.luxoft.bankapp.model.Account;
+import com.luxoft.bankapp.model.AccountType;
 import com.luxoft.bankapp.model.Client;
-import com.luxoft.bankapp.service.storage.ClientRepository;
+import com.luxoft.bankapp.service.storage.Storage;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface Banking {
+    void setStorage(Storage<Client> storage);
 
-    Client addClient(Client client);
+    Client addClient(Client c);
 
     Client getClient(String name);
 
-    List<Client> getClients();
+    Set<Client> getClients();
 
-    void deleteClient(Client client);
+    void removeClient(Client c);
 
-    AbstractAccount createAccount(Client client, Class type);
+    Account createAccount(Client c, AccountType type);
 
-    void updateAccount(Client c, AbstractAccount account);
+    void updateAccount(Client c, Account account);
 
-    AbstractAccount getAccount(Client client, Class type);
+    Account getAccount(Client c, AccountType type);
 
-    List<AbstractAccount> getAllAccounts();
+    Set<Account> getAllAccounts();
 
-    List<AbstractAccount> getAllAccounts(Client client);
+    Set<Account> getAllAccounts(Client c);
+
+    void removeAccount(Client c, AccountType type);
 
     void transferMoney(Client from, Client to, double amount);
 
-    void setRepository(ClientRepository storage);
+    void parseFeed(Map<String, String> map);
 }

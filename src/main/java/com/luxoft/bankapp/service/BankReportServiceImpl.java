@@ -1,9 +1,9 @@
 package com.luxoft.bankapp.service;
 
-import com.luxoft.bankapp.model.AbstractAccount;
-import com.luxoft.bankapp.model.CheckingAccount;
+import com.luxoft.bankapp.model.Account;
+import com.luxoft.bankapp.model.AccountType;
 import com.luxoft.bankapp.model.Client;
-import com.luxoft.bankapp.service.storage.ClientRepository;
+import com.luxoft.bankapp.service.storage.Storage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +14,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class BankReportServiceImpl implements BankReportService {
-
     @Autowired
-    private ClientRepository repository;
+    private Storage<Client> storage;
 
     @Override
     public int getNumberOfBankClients() {
-
-        return repository.getAll().size();
+        return storage.getAll().size();
     }
 
     @Override
     public int getAccountsNumber() {
-
-        return repository.getAll()
+        return storage.getAll()
                 .stream()
                 .flatMap(c -> c.getAccounts().stream())
                 .collect(Collectors.toList()).size();
@@ -35,8 +32,7 @@ public class BankReportServiceImpl implements BankReportService {
 
     @Override
     public List<Client> getClientsSorted() {
-
-        return repository.getAll()
+        return storage.getAll()
                 .stream()
                 .sorted(Comparator.comparing(Client::getName))
                 .collect(Collectors.toList());
@@ -44,24 +40,21 @@ public class BankReportServiceImpl implements BankReportService {
 
     @Override
     public double getBankCreditSum() {
-
-        return repository.getAll().stream()
+        return storage.getAll().stream()
                 .flatMap(c -> c.getAccounts().stream())
-                .filter(a -> a.getClass() == CheckingAccount.class)
-                .mapToDouble(AbstractAccount::getBalance)
+                .filter(a -> a.getType() == AccountType.CHECKING)
+                .mapToDouble(Account::getBalance)
                 .filter(b -> b < 0)
                 .sum();
     }
 
     @Override
     public Map<String, List<Client>> getClientsByCity() {
-
-        return repository.getAll().stream()
+        return storage.getAll().stream()
                 .collect(Collectors.groupingBy(Client::getCity));
     }
 
-    public void setRepository(ClientRepository repository) {
-
-        this.repository = repository;
+    public void setStorage(Storage<Client> storage) {
+        this.storage = storage;
     }
 }

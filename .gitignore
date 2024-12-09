@@ -3,4 +3,7 @@ out
 *.iml
 target
 feeds
-
+.mvn
+*.md
+mvnw*.*
+mvnw
