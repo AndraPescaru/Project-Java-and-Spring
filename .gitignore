@@ -2,7 +2,7 @@
 out
 *.iml
 target
-feeds
+#feeds
 .mvn
 *.md
 mvnw*.*
