@@ -1,5 +1,4 @@
 package com.luxoft.bankapp.service.audit;
-
 import com.luxoft.bankapp.service.audit.events.AccountEvent;
 import com.luxoft.bankapp.service.audit.events.BalanceEvent;
 import com.luxoft.bankapp.service.audit.events.DepositEvent;
@@ -21,7 +20,7 @@ public class AuditService implements Audit{
     }
 
     @Override
-    @EventListener
+    @EventListener(condition = "#event.amount >= @eventConditionFilter.depositLimit")
     public void auditOperation(DepositEvent event)
     {
         events.add(event);
@@ -32,7 +31,7 @@ public class AuditService implements Audit{
     }
 
     @Override
-    @EventListener
+    @EventListener(condition = "#event.amount >= @eventConditionFilter.withdrawalLimit")
     public void auditOperation(WithdrawEvent event)
     {
         events.add(event);
