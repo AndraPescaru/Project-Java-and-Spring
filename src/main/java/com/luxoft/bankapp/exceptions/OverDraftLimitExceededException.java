@@ -1,11 +1,11 @@
 package com.luxoft.bankapp.exceptions;
 
-public class OverDraftLimitExceededException extends NotEnoughFundsException {
+public class OverdraftLimitExceededException extends NotEnoughFundsException {
 
     private static final long serialVersionUID = 1L;
     private String account;
 
-    public OverDraftLimitExceededException(String account, double amount) {
+    public OverdraftLimitExceededException(String account, double amount) {
         super(amount);
         this.account = account;
     }
