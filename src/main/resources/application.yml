@@ -1,7 +1,6 @@
 spring.profiles.active: dev
 feed:
   filename: demo.feed
-
 ---
 
 spring:

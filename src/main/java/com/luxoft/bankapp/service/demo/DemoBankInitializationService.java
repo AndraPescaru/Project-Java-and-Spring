@@ -13,15 +13,24 @@ import java.io.File;
 @Profile("dev")
 public class DemoBankInitializationService implements BankInitializationService {
 
+    private static final String DEMO_FEED_FILE_NAME = "demo";
     @Autowired
     private BankFeedService feedService;
 
-    @Value("${feed.filename:demo.feed}")
+    @Value("${feed.filename}")
     private String fileName;
+
 
     @Override
     @PostConstruct
-    public void createClientsForDemo() {
+    public void createClientsForDemo()
+    {
+        if (fileName == null)
+        {
+            fileName = DEMO_FEED_FILE_NAME;
+        }
+
         feedService.loadFeed(new File(fileName));
     }
+
 }
